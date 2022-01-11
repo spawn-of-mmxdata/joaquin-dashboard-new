@@ -46,36 +46,31 @@ df_linkedin['Date'] = pd.to_datetime(df_linkedin['Date'])
 df_engagements['Date'] = pd.to_datetime(df_engagements['Date'])
 df_blogs['Date of Posting'] = pd.to_datetime(df_blogs['Date of Posting'])
 
-exec_dict = {'Alex Gorsky (J&J)':['Alex Gorsky'], 
-             'Tim Cook (Apple)':['Tim Cook', 'tim_cook'], 
+exec_dict = {'Joaquin Duato (J&J)':['Joaquin Duato'],  
              'Albert Bourla (Pfizer)':['Albert Bourla', 'AlbertBourla'],
-             'Stephen Hoge (Moderna)':['Stephen Hoge', 'stephen-hoge'],
              'Pascal Soriot (AstraZeneca)':['Pascal Soriot'],
              'Vasant Narasimhan (Novartis)':['Vasant Narasimhan', 'VasNarasimhan', 'vasmarasimhan'],
-             'Sundar Pichai (Alphabet)':['Sundar Pichai', 'sundarpichai', 'sundar-pichai'],
-             'Marc Benioff (Salesforce)':['Marc Benioff', 'Benioff', 'marcbenioff'],
-             'Satya Nadella (Microsoft)':['Satya Nadella', 'satyanadella'],
-             'Ramon Laguarta (PepsiCo)':['Ramon Laguarta', 'ramonlaguarta', 'RLaguarta'],
-             'David Taylor (P&G)':['David Taylor', 'davidtaylorpg'],
-             'Bob Chapek (Disney)':['Bob Chapek'],
-             'Mary Barra (GM)':['Mary Barra', 'mtbarra', 'mary-barra'],
-             'Jamie Dimon (JP Morgan)':['Jamie Dimon', 'jamie-dimon'],
+             'Stephane Bancel (Moderna)':['Bancel'],
+             'Robert Davis (Merck)':['rob davis', 'robdavis'],
+             'Kevin Labo (Stryker)':['Srtyker'],
+             'Geoffrey S. Martha (Medtronic)':['Geoffrey Martha', 'geoff martha'],
+             'Karen Lynch (CVS)':['karen s. lynch'],
+             'Antonio Neri (Hewlett Packard Enterprise HPE)':['HPE', 'hewlett packard','hewlettpackard','hewlett packard enterprise'],
+             'Arvind Krishna (IBM)':['Krishna'],
              'Doug McMillon (Walmart)':['Doug McMillon', 'dougmcmillon']}
 
-colors = {"Tim Cook (Apple)": "#00008B",
+colors = {"Stephane Bancel (Moderna)": "#00008B",
           "Albert Bourla (Pfizer)": "#FF00FF", 
-          "Alex Gorsky (J&J)": "#ff0000",
+          "Joaquin Duato (J&J)": "#ff0000",
           'Steph Hoge (Moderna)':'#1dcccf',
           'Pascal Soriot (AstraZeneca)':'#ff8800',
           'Vasant Narasimhan (Novartis)':'#8600c9',
-          'Sundar Pichai (Alphabet)':'#16d0f5',
-          'Marc Benioff (Salesforce)':'#026605',
-          'Satya Nadella (Microsoft)':'#ff47dd',
-          'Ramon Laguarta (PepsiCo)':'#ff6f00',
-          'David Taylor (P&G)':'#00ff3c',
-          'Bob Chapek (Disney)':'#ff9999',
-          'Mary Barra (GM)':'#fff799',
-          'Jamin Dimon (JP Morgan)':'#00ffe5',
+          'Robert Davis (Merck)':'#16d0f5',
+          'Kevin Labo (Stryker)':'#026605',
+          'Geoffrey S. Martha (Medtronic)':'#ff47dd',
+          'Karen Lynch (CVS)':'#ff6f00',
+          'Antonio Neri (Hewlett Packard Enterprise HPE)':'#00ff3c',
+          'Arvind Krishna (IBM)':'#ff9999',
           'Doug McMillon (Walmart)':'#d2fcb1'}
 
 app.layout = html.Div(
@@ -153,7 +148,7 @@ app.layout = html.Div(
         html.Div([
                 html.Div([
                     html.Div([
-                    html.H3('Key Alex Gorsky Perception Metrics', style = {'fontSize':35, 'fontFamily':'Arial'}),
+                    html.H3('Key Joaquin Duato Perception Metrics', style = {'fontSize':35, 'fontFamily':'Arial'}),
                         html.H4('Source: Morning Consult May 2021', style = {'fontSize':15, 'fontFamily':'Arial'})
                     ]),
                                 html.Br(),
@@ -193,33 +188,33 @@ app.layout = html.Div(
                 html.Br(),
                 html.Br(),
         html.Div([
-            html.Div([html.H4('Key Alex Gorsky Visibility Metrics', style = {'fontSize':35, 'fontFamily':'Arial'}),
+            html.Div([html.H4('Key Joaquin Duato Visibility Metrics', style = {'fontSize':35, 'fontFamily':'Arial'}),
                       html.Br(),
                       html.Br(),
                                 html.Div([dbc.Row([
                                     dbc.Col([
                                         dbc.Card([
-                                            html.Div(id = 'alex_coverage_card'),
+                                            html.Div(id = 'Joaquin_coverage_card'),
                                             html.P('Total Coverage Volume', style={'fontSize': 15, 'fontFamily':'Arial'})
                                         ], color = 'light', outline = True, style={'fontSize':25, 'padding': 5, 'fontFamily':'Arial'})]),
                                     dbc.Col([
                                     dbc.Card([
-                                            html.Div(id = 'alex_reach_card'),
+                                            html.Div(id = 'Joaquin_reach_card'),
                                             html.P('Total Reach', style={'fontSize': 15, 'fontFamily':'Arial'})
                                         ], color = 'light', outline = True, style={'fontSize':25, 'padding': 5, 'fontFamily':'Arial'})]),
                                     dbc.Col([
                                     dbc.Card([
-                                            html.Div(id = 'alex_comms_pillars_coverage_card'),
+                                            html.Div(id = 'Joaquin_comms_pillars_coverage_card'),
                                             html.P('Comms Pillar Coverage Volume', style={'fontSize': 15, 'fontFamily':'Arial'})
                                         ], color = 'light', outline = True, style={'fontSize':25, 'padding': 5, 'fontFamily':'Arial'})]),
                                     dbc.Col([
                                     dbc.Card([
-                                            html.Div(id = 'alex_comms_pillars_reach_card'),
+                                            html.Div(id = 'Joaquin_comms_pillars_reach_card'),
                                             html.P('Comms Pillar Reach', style={'fontSize': 15, 'fontFamily':'Arial'})
                                         ], color = 'light', outline = True, style={'fontSize':25, 'padding': 5, 'fontFamily':'Arial'})]),
                                     dbc.Col([
                                     dbc.Card([
-                                            html.Div(id = 'alex_sentiment_card'),
+                                            html.Div(id = 'Joaquin_sentiment_card'),
                                             html.P('Positive or Neutral Sentiment', style={'fontSize': 15, 'fontFamily':'Arial'})
                                         ], color = 'light', outline = True, style={'fontSize':25, 'padding': 5, 'fontFamily':'Arial'})]),
                                     ])], style = {'textAlign':'center'})], style = {'textAlign': 'center'}),                       
@@ -236,7 +231,7 @@ app.layout = html.Div(
         html.Br(),
         html.Br(),
         html.Div([
-            html.H5('Alex Gorsky Engagements', style = {'fontSize':35, 'fontFamily':'Arial'}),
+            html.H5('Joaquin Duato Engagements', style = {'fontSize':35, 'fontFamily':'Arial'}),
             dbc.Row([
                 html.Div([
                     dbc.Col([
@@ -387,7 +382,7 @@ app.layout = html.Div(
         html.Br(),
         html.Div([
             html.Div([html.P('Most Read News Articles', style = {'fontSize': 35, 'fontFamily':'Arial', 'color':'black', 'textAlign':'center'}),
-                dt.DataTable(id='news_articles_table_alex',
+                dt.DataTable(id='news_articles_table_Joaquin',
                                     columns=[{"name": i, "id": i} for i in ['Name', 'Content', 'URL', 'Reach']],
                                     page_size = 10,
                                     style_table = {'fontFamily':'Arial'},
@@ -404,7 +399,7 @@ app.layout = html.Div(
         html.Br(),
         html.Div([
             html.Div([html.P('Most Engaging Social Posts', style = {'fontSize': 35, 'fontFamily':'Arial', 'color':'black', 'textAlign':'center'}),
-                dt.DataTable(id='social_posts_table_alex',
+                dt.DataTable(id='social_posts_table_Joaquin',
                                     columns=[{"name": i, "id": i} for i in ['Name', 'Content', 'URL', 'Engagement']],
                                     page_size = 10,
                                     style_table = {'fontFamily':'Arial'},
@@ -509,11 +504,11 @@ app.layout = html.Div(
 )
 
 @app.callback(
-    [Output('alex_coverage_card', 'children'),
-     Output('alex_reach_card', 'children'),
-     Output('alex_comms_pillars_coverage_card', 'children'),
-     Output('alex_comms_pillars_reach_card', 'children'),
-     Output('alex_sentiment_card', 'children')],
+    [Output('Joaquin_coverage_card', 'children'),
+     Output('Joaquin_reach_card', 'children'),
+     Output('Joaquin_comms_pillars_coverage_card', 'children'),
+     Output('Joaquin_comms_pillars_reach_card', 'children'),
+     Output('Joaquin_sentiment_card', 'children')],
     [Input('date_picker', 'start_date'),
      Input('date_picker', 'end_date')]
 )
@@ -536,7 +531,7 @@ def card_func(start_date, end_date):
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
         FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-        WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+        WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
     )
 
     SELECT COUNT(url) as count_url
@@ -561,7 +556,7 @@ def card_func(start_date, end_date):
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
         FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-        WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+        WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
     )
 
     SELECT sum(REACH) as sum_reach
@@ -586,7 +581,7 @@ def card_func(start_date, end_date):
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
         FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-        WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+        WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND tags_customer IS NOT NULL
     )
 
@@ -612,7 +607,7 @@ def card_func(start_date, end_date):
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
         FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-        WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+        WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND tags_customer IS NOT NULL
     )
 
@@ -626,7 +621,7 @@ def card_func(start_date, end_date):
     WITH Main_Table AS (
         SELECT COUNT(sentiment) as sentiment_count
         FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-        WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+        WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND sentiment >= 0
             AND EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) >= '{start_date}'
             AND EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) <= '{end_date}'
@@ -635,7 +630,7 @@ def card_func(start_date, end_date):
     Total_Table AS (
         SELECT COUNT(url) as total_count
         FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-        WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+        WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) >= '{start_date}'
             AND EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) <= '{end_date}'
     )
@@ -682,7 +677,7 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
         FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-        WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+        WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(tags_customer, r'Frontline HCPs')
     )
 
@@ -708,7 +703,7 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
         FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-        WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+        WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(tags_customer, r'Innovation')
     )
 
@@ -734,7 +729,7 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
         FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-        WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+        WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(tags_customer, r'Values')
     )
 
@@ -760,7 +755,7 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
         FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-        WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+        WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(tags_customer, r'Health Equity')
     )
 
@@ -786,7 +781,7 @@ def vis_message_graph_perc_func(start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
             FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-            WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+            WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND tags_customer IS NOT NULL
         )
 
@@ -813,7 +808,7 @@ def vis_message_graph_perc_func(start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
             FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-            WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+            WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
         )
 
         SELECT COUNT(url) as count_url
@@ -967,15 +962,15 @@ def blogs_func(start_date, end_date):
     return card1, card2, card3, card4, card5, card6, dff_blogs.to_dict('records')
 
 @app.callback(
-    [Output('news_articles_table_alex', 'data'),
-     Output('social_posts_table_alex', 'data'),
+    [Output('news_articles_table_Joaquin', 'data'),
+     Output('social_posts_table_Joaquin', 'data'),
      Output('speaking_engagements_table', 'data')],
     [Input('date_picker', 'start_date'),
      Input('date_picker', 'end_date'),
      Input('comms_pillar_toggle', 'on')]
 )
 
-def alex_tables_func(start_date, end_date, on):
+def Joaquin_tables_func(start_date, end_date, on):
     dff_engagements = df_engagements
 
     if start_date is not None: # add start time
@@ -1001,7 +996,7 @@ def alex_tables_func(start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
             FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-            WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+            WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Gorsky')
                 AND tags_customer IS NOT NULL
                 AND REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
         )
@@ -1032,7 +1027,7 @@ def alex_tables_func(start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
             FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-            WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+            WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND tags_customer IS NOT NULL
                 AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
         )
@@ -1063,7 +1058,7 @@ def alex_tables_func(start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
             FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-            WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+            WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
         )
 
@@ -1093,7 +1088,7 @@ def alex_tables_func(start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
             FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
-            WHERE REGEXP_CONTAINS(matched_profile, r'Alex Gorsky')
+            WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
         )
 
@@ -2039,4 +2034,4 @@ def table_func(value, start_date, end_date, on):
 
 if __name__ == '__main__':
     app.debug = True
-    app.run_server()
+    app.run_server() 
