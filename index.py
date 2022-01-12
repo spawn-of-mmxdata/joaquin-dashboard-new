@@ -32,8 +32,8 @@ server = app.server
 
 auth = dash_auth.BasicAuth(app, user_password_pairs)
 
-credentials = service_account.Credentials.from_service_account_file('jnj-ooc-fbdbb13463ac.json')
-project_id = 'jnj-ooc'
+credentials = service_account.Credentials.from_service_account_file('jnj-ooc-joaquin-6e440b999d83.json')
+project_id = 'jnj-ooc-joaquin'
 
 df_chng_fav = pd.read_excel('chng_fav.xlsx')
 df_fav_ceo = pd.read_excel('fav_ceo.xlsx')
@@ -530,7 +530,7 @@ def card_func(start_date, end_date):
         content_snippet,
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-        FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+        FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
     )
 
@@ -555,7 +555,7 @@ def card_func(start_date, end_date):
         content_snippet,
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-        FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+        FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
     )
 
@@ -580,7 +580,7 @@ def card_func(start_date, end_date):
         content_snippet,
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-        FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+        FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND tags_customer IS NOT NULL
     )
@@ -606,7 +606,7 @@ def card_func(start_date, end_date):
         content_snippet,
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-        FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+        FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND tags_customer IS NOT NULL
     )
@@ -676,7 +676,7 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         content_snippet,
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-        FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+        FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(tags_customer, r'Frontline HCPs')
     )
@@ -702,7 +702,7 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         content_snippet,
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-        FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+        FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(tags_customer, r'Innovation')
     )
@@ -728,7 +728,7 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         content_snippet,
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-        FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+        FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(tags_customer, r'Values')
     )
@@ -754,7 +754,7 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         content_snippet,
         sentiment,
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-        FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+        FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(tags_customer, r'Health Equity')
     )
@@ -780,7 +780,7 @@ def vis_message_graph_perc_func(start_date, end_date, on):
             content_snippet,
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND tags_customer IS NOT NULL
         )
@@ -807,7 +807,7 @@ def vis_message_graph_perc_func(start_date, end_date, on):
             content_snippet,
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
         )
 
@@ -995,7 +995,7 @@ def Joaquin_tables_func(start_date, end_date, on):
             content_snippet,
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Gorsky')
                 AND tags_customer IS NOT NULL
                 AND REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
@@ -1026,7 +1026,7 @@ def Joaquin_tables_func(start_date, end_date, on):
             content_snippet,
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND tags_customer IS NOT NULL
                 AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
@@ -1057,7 +1057,7 @@ def Joaquin_tables_func(start_date, end_date, on):
             content_snippet,
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
         )
@@ -1087,7 +1087,7 @@ def Joaquin_tables_func(start_date, end_date, on):
             content_snippet,
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
         )
@@ -1133,7 +1133,7 @@ def vis_time_graph_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE tags_customer IS NOT NULL
         ),
 
@@ -1181,7 +1181,7 @@ def vis_time_graph_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         ),
 
         Match_Table AS (
@@ -1242,7 +1242,7 @@ def share_vis_graphvis_time_graph_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE tags_customer IS NOT NULL
         ),
         
@@ -1288,7 +1288,7 @@ def share_vis_graphvis_time_graph_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         ),
         
         Sub_Main_Table AS (
@@ -1352,7 +1352,7 @@ def card_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE tags_customer IS NOT NULL
         ),
         
@@ -1443,7 +1443,7 @@ def card_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jjnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE tags_customer IS NOT NULL
                 AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
         ),
@@ -1489,7 +1489,7 @@ def card_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE tags_customer IS NOT NULL
                 AND sentiment >= 0
         ),
@@ -1517,7 +1517,7 @@ def card_func(value, start_date, end_date, on):
                 sentiment,
                 EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
                 SPLIT(matched_profile, ',') as mention_name,
-                FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+                FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
                 WHERE tags_customer IS NOT NULL
             ),
 
@@ -1627,7 +1627,7 @@ def card_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
         ),
 
@@ -1672,7 +1672,7 @@ def card_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
         ),
 
@@ -1717,7 +1717,7 @@ def card_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
                 WHERE sentiment >= 0
         ),
 
@@ -1744,7 +1744,7 @@ def card_func(value, start_date, end_date, on):
                 sentiment,
                 EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
                 SPLIT(matched_profile, ',') as mention_name,
-                FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+                FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             ),
 
             Sub_Total_Table AS (
@@ -1832,7 +1832,7 @@ def table_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE tags_customer IS NOT NULL
                 AND REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
         ),
@@ -1885,7 +1885,7 @@ def table_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE tags_customer IS NOT NULL
                 AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
         ),
@@ -1939,7 +1939,7 @@ def table_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
         ),
 
@@ -1991,7 +1991,7 @@ def table_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
         ),
         
