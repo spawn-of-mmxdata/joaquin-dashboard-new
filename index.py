@@ -35,12 +35,12 @@ auth = dash_auth.BasicAuth(app, user_password_pairs)
 credentials = service_account.Credentials.from_service_account_file('jnj-ooc-joaquin-6e440b999d83.json')
 project_id = 'jnj-ooc-joaquin'
 
-df_chng_fav = pd.read_excel('chng_fav.xlsx')
-df_fav_ceo = pd.read_excel('fav_ceo.xlsx')
-df_resp_ceo = pd.read_excel('resp_ceo.xlsx')
-df_linkedin = pd.read_excel('Alex Gorsky - LinkedIn.xlsx', skiprows = 1, skipfooter = 1)
-df_engagements = pd.read_excel('alex_activity_may.xlsx')
-df_blogs = pd.read_excel('Alex Blog Data and Metrics.xlsx')
+# df_chng_fav = pd.read_excel('chng_fav.xlsx')
+# df_fav_ceo = pd.read_excel('fav_ceo.xlsx')
+# df_resp_ceo = pd.read_excel('resp_ceo.xlsx')
+df_linkedin = pd.read_excel('../joaquin-dashboard-new/data/Alex Gorsky - LinkedIn.xlsx', skiprows = 1, skipfooter = 1)
+df_engagements = pd.read_excel('../joaquin-dashboard-new/data/alex_activity_may.xlsx')
+df_blogs = pd.read_excel('../joaquin-dashboard-new/data/Alex Blog Data and Metrics.xlsx')
 
 df_linkedin['Date'] = pd.to_datetime(df_linkedin['Date'])
 df_engagements['Date'] = pd.to_datetime(df_engagements['Date'])
@@ -110,11 +110,11 @@ app.layout = html.Div(
                             ),
                             dcc.DatePickerRange(
                                 id = 'date_picker',
-                                min_date_allowed= date(2021, 5, 1),
-                                max_date_allowed= date(2021, 6, 30),
-                                initial_visible_month = date(2021, 5, 1),
-                                start_date = date(2021, 6, 1),
-                                end_date = date(2021, 6, 30)
+                                min_date_allowed= date(2021, 10, 1),
+                                max_date_allowed= date(2021, 12, 31),
+                                initial_visible_month = date(2021, 10, 1),
+                                start_date = date(2021, 12, 1),
+                                end_date = date(2021, 12, 31)
                             )],
                             style = {
                                 'fontFamily':'Arial',
