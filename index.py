@@ -39,7 +39,7 @@ project_id = 'jnj-ooc-joaquin'
 # df_fav_ceo = pd.read_excel('fav_ceo.xlsx')
 # df_resp_ceo = pd.read_excel('resp_ceo.xlsx')
 df_linkedin = pd.read_excel('../joaquin-dashboard-new/data/Alex Gorsky - LinkedIn.xlsx', skiprows = 1, skipfooter = 1)
-df_engagements = pd.read_excel('../joaquin-dashboard-new/data/alex_activity_may.xlsx')
+df_engagements = pd.read_excel('../joaquin-dashboard-new/data/joaquin_act_spreadsheet.xlsx')
 df_blogs = pd.read_excel('../joaquin-dashboard-new/data/Alex Blog Data and Metrics.xlsx')
 
 df_linkedin['Date'] = pd.to_datetime(df_linkedin['Date'])
@@ -149,7 +149,7 @@ app.layout = html.Div(
                 html.Div([
                     html.Div([
                     html.H3('Key Joaquin Duato Perception Metrics', style = {'fontSize':35, 'fontFamily':'Arial'}),
-                        html.H4('Source: Morning Consult May 2021', style = {'fontSize':15, 'fontFamily':'Arial'})
+                        html.H4('Source: Morning Consult December 2021', style = {'fontSize':15, 'fontFamily':'Arial'})
                     ]),
                                 html.Br(),
                                 html.Br(),
@@ -157,19 +157,19 @@ app.layout = html.Div(
                                     dbc.Col([
                                         dbc.Card([
                                             html.Div(id = 'fav_card',
-                                                     children = '{:.0%}'.format(.55)),
+                                                     children = '{:.0%}'.format(.21)),
                                             html.P('Favorability', style={'fontSize': 15, 'fontFamily':'Arial'})
                                         ], color = 'light', outline = True, style={'fontSize':25, 'padding': 5, 'fontFamily':'Arial'})]),
                                     dbc.Col([
                                     dbc.Card([
                                             html.Div(id = 'chng_card',
-                                                     children = '{:.0%}'.format(.62)),
+                                                     children = '{:.0%}'.format(.55)),
                                             html.P('Trust to Do the Right Thing', style={ 'fontSize': 15, 'fontFamily':'Arial'})
                                         ], color = 'light', outline = True, style={'fontSize':25, 'padding': 5, 'fontFamily':'Arial'})]),
                                     dbc.Col([
                                     dbc.Card([
                                             html.Div(id = 'reb_fav_card',
-                                                     children = '{:.0%}'.format(.64)),
+                                                     children = '{:.0%}'.format(.56)),
                                             html.P('Care About Contributing To Society', style={ 'fontSize': 15, 'fontFamily':'Arial'})
                                         ], color = 'light', outline = True, style={'fontSize':25, 'padding': 5, 'fontFamily':'Arial'})]),
                                     dbc.Col([
@@ -181,7 +181,7 @@ app.layout = html.Div(
                                     dbc.Col([
                                     dbc.Card([
                                             html.Div(id = 'impact_card',
-                                                     children = '{:.0%}'.format(.87)),
+                                                     children = '{:.0%}'.format(.23)),
                                             html.P('Positive-Neutral Recall', style={ 'fontSize': 15, 'fontFamily':'Arial'})
                                         ], color = 'light', outline = True, style={'fontSize':25, 'padding': 5, 'fontFamily':'Arial'})]),
                                     ])], style = {'textAlign':'center'})])], style = {'textAlign': 'center'}),
@@ -620,7 +620,7 @@ def card_func(start_date, end_date):
     query5 = f"""
     WITH Main_Table AS (
         SELECT COUNT(sentiment) as sentiment_count
-        FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+        FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND sentiment >= 0
             AND EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) >= '{start_date}'
@@ -629,7 +629,7 @@ def card_func(start_date, end_date):
 
     Total_Table AS (
         SELECT COUNT(url) as total_count
-        FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+        FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) >= '{start_date}'
             AND EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) <= '{end_date}'
@@ -1397,7 +1397,7 @@ def card_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE tags_customer IS NOT NULL
                 AND REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
         ),
@@ -1443,7 +1443,7 @@ def card_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jjnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE tags_customer IS NOT NULL
                 AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
         ),
@@ -1583,7 +1583,7 @@ def card_func(value, start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date,
             SPLIT(matched_profile, ',') as mention_name,
-            FROM `jnj-ooc.jnj_ooc_dashboard_data.jnj_ooc_dashboard_data`
+            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         ),
 
         Sub_Main_Table AS (
