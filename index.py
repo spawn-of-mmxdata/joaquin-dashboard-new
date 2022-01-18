@@ -38,9 +38,9 @@ project_id = 'jnj-ooc-joaquin'
 # df_chng_fav = pd.read_excel('chng_fav.xlsx')
 # df_fav_ceo = pd.read_excel('fav_ceo.xlsx')
 # df_resp_ceo = pd.read_excel('resp_ceo.xlsx')
-df_linkedin = pd.read_excel('/data/Alex Gorsky - LinkedIn.xlsx', skiprows = 1, skipfooter = 1)
-df_engagements = pd.read_excel('/data/joaquin_act_spreadsheet.xlsx')
-df_blogs = pd.read_excel('/data/Alex Blog Data and Metrics.xlsx')
+df_linkedin = pd.read_excel('../data/Alex Gorsky - LinkedIn.xlsx', skiprows = 1, skipfooter = 1)
+df_engagements = pd.read_excel('../data/joaquin_act_spreadsheet.xlsx')
+df_blogs = pd.read_excel('../data/Alex Blog Data and Metrics.xlsx')
 
 df_linkedin['Date'] = pd.to_datetime(df_linkedin['Date'])
 df_engagements['Date'] = pd.to_datetime(df_engagements['Date'])
