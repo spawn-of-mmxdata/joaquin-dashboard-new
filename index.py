@@ -86,7 +86,7 @@ app.layout = html.Div(
 		               style = {'width':'50%', 'height':'50%'}
 		       )], style = {'textAlign':'left'}),
                         html.H4(
-                            'Office of the Chair Monthly Performance and CEO Landscape Dashboard test', style = {'fontSize':40, 'fontFamily':'Arial'}
+                            'Office of the Chair Monthly Performance and CEO Landscape Dashboard', style = {'fontSize':40, 'fontFamily':'Arial'}
                         )
                     ],
 
