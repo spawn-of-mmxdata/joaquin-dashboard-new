@@ -21,7 +21,7 @@ from pandas.io import gbq
 import pandas_gbq
 from datetime import date
 
-user_password_pairs = {'drew.shives@hellommc.com' : 'PASamuelson06171989#', 'Joaquin@hellommc.com' : '240803', 'joaquin@hellommc.com' : 'MMC_830!',
+user_password_pairs = {'drew.shives@hellommc.com' : 'PASamuelson06171989#', 'joaquin@hellommc.com' : '240803', 'jomalley@hellommc.com' : 'MMC_830!',
 'JoaquinDuato12' : 'OOC2022!'}
 
 app = dash.Dash(__name__, title = 'J&J OOC Dashboard', external_stylesheets=[dbc.themes.MATERIA], suppress_callback_exceptions=True,
