@@ -571,10 +571,10 @@ def card_func(start_date, end_date):
     ),
 
     result_table AS (
-        SELECT matched_profile,
+        SELECT DISTINCT url,
+        matched_profile,
         published_date,
         reach,
-        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     )
@@ -644,10 +644,10 @@ def card_func(start_date, end_date):
     ),
 
     result_table AS (
-        SELECT matched_profile,
+        SELECT DISTINCT url,
+        matched_profile,
         published_date,
         reach,
-        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     )
@@ -681,10 +681,10 @@ def card_func(start_date, end_date):
     ),
 
     result_table AS (
-        SELECT matched_profile,
+        SELECT DISTINCT url,
+        matched_profile,
         published_date,
         sentiment,
-        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     ),
@@ -756,10 +756,10 @@ def vis_message_graph_perc_func(start_date, end_date, on):
     ),
 
     result_table AS (
-        SELECT matched_profile,
+        SELECT DISTINCT url,
+        matched_profile,
         published_date,
         reach,
-        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     )
@@ -793,10 +793,10 @@ def vis_message_graph_perc_func(start_date, end_date, on):
     ),
 
     result_table AS (
-        SELECT matched_profile,
+        SELECT DISTINCT url,
+        matched_profile,
         published_date,
         reach,
-        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     )
@@ -830,10 +830,10 @@ def vis_message_graph_perc_func(start_date, end_date, on):
     ),
 
     result_table AS (
-        SELECT matched_profile,
+        SELECT DISTINCT url,
+        matched_profile,
         published_date,
         reach,
-        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     )
@@ -867,10 +867,10 @@ def vis_message_graph_perc_func(start_date, end_date, on):
     ),
 
     result_table AS (
-        SELECT matched_profile,
+        SELECT DISTINCT url,
+        matched_profile,
         published_date,
         reach,
-        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     )
@@ -904,10 +904,10 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         ),
     
         result_table AS (
-            SELECT matched_profile,
+            SELECT DISTINCT url,
+            matched_profile,
             published_date,
             reach,
-            DISTINCT url,
             IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
             FROM Main_Table
         )
@@ -941,10 +941,10 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         ),
     
         result_table AS (
-            SELECT matched_profile,
+            SELECT DISTINCT url,
+            matched_profile,
             published_date,
             reach,
-            DISTINCT url,
             IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
             FROM Main_Table
         )
@@ -1142,9 +1142,9 @@ def Joaquin_tables_func(start_date, end_date, on):
         ),
     
         result_table AS (
-            SELECT matched_profile,
+            SELECT DISTINCT url,
+            matched_profile,
             content_snippet,
-            DISTINCT url,
             extra_author_attributes_name
             published_date,
             reach,
@@ -1186,9 +1186,9 @@ def Joaquin_tables_func(start_date, end_date, on):
         ),
     
         result_table AS (
-            SELECT matched_profile,
+            SELECT DISTINCT url,
+            matched_profile,
             content_snippet,
-            DISTINCT url,
             extra_author_attributes_name
             published_date,
             engagement,
@@ -1229,9 +1229,9 @@ def Joaquin_tables_func(start_date, end_date, on):
         ),
     
         result_table AS (
-            SELECT matched_profile,
+            SELECT DISTINCT url,
+            matched_profile,
             content_snippet,
-            DISTINCT url,
             extra_author_attributes_name
             published_date,
             reach,
@@ -1272,9 +1272,9 @@ def Joaquin_tables_func(start_date, end_date, on):
         ),
     
         result_table AS (
-            SELECT matched_profile,
+            SELECT DISTINCT url,
+            matched_profile,
             content_snippet,
-            DISTINCT url,
             extra_author_attributes_name
             published_date,
             engagement,
