@@ -574,13 +574,12 @@ def card_func(start_date, end_date):
         SELECT matched_profile,
         published_date,
         reach,
-        url,
+        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     )
     
-    SELECT DISTINCT url,
-        SUM(reach) as sum_reach
+    SELECT SUM(reach) as sum_reach
     FROM result_table
     WHERE REGEXP_CONTAINS(result, r'Self')
         AND published_date >= '{start_date}'
@@ -648,13 +647,12 @@ def card_func(start_date, end_date):
         SELECT matched_profile,
         published_date,
         reach,
-        url,
+        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     )
     
-    SELECT DISTINCT url,
-        SUM(reach) as sum_reach
+    SELECT SUM(reach) as sum_reach
     FROM result_table
     WHERE REGEXP_CONTAINS(result, r'Self')
         AND published_date >= '{start_date}'
@@ -686,14 +684,13 @@ def card_func(start_date, end_date):
         SELECT matched_profile,
         published_date,
         sentiment,
-        url,
+        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     ),
     
     Trunc_Table AS (
-        SELECT DISTINCT url,
-            COUNT(sentiment) as sentiment_count
+        SELECT COUNT(sentiment) as sentiment_count
         FROM result_table
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND sentiment >= 0
@@ -703,8 +700,7 @@ def card_func(start_date, end_date):
     ),
 
     Total_Table AS (
-        SELECT DISTINCT url,
-            COUNT(published_date) as total_count
+        SELECT COUNT(published_date) as total_count
         FROM result_table
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(result, r'Self')
@@ -722,9 +718,9 @@ def card_func(start_date, end_date):
     dff_comms_sum_reach = gbq.read_gbq(query4, project_id = project_id, dialect = 'standard', credentials = credentials)
     dff_total_sentiment = gbq.read_gbq(query5, project_id = project_id, dialect = 'standard', credentials = credentials)
     
-    card1 = '{:,}'.format(dff_total_count_url['count_result'].sum())
+    card1 = '{:,}'.format(dff_total_count_url['count_url'].sum())
     card2 = '{:,}'.format(dff_total_sum_reach['sum_reach'].sum())
-    card3 = '{:,}'.format(dff_comms_count_url['count_result'].sum())
+    card3 = '{:,}'.format(dff_comms_count_url['count_url'].sum())
     card4 = '{:,}'.format(dff_comms_sum_reach['sum_reach'].sum())
     card5 = '{:.0%}'.format(dff_total_sentiment['sentiment_pct'].sum())
             
@@ -763,13 +759,12 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         SELECT matched_profile,
         published_date,
         reach,
-        url,
+        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     )
     
-    SELECT DISTINCT url,
-        COUNT(published_date) as count_pub
+    SELECT COUNT(published_date) as count_pub
     FROM result_table
     WHERE REGEXP_CONTAINS(result, r'Self')
         AND published_date >= '{start_date}'
@@ -801,13 +796,12 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         SELECT matched_profile,
         published_date,
         reach,
-        url,
+        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     )
     
-    SELECT DISTINCT url,
-        COUNT(published_date) as count_pub
+    SELECT COUNT(published_date) as count_pub
     FROM result_table
     WHERE REGEXP_CONTAINS(result, r'Self')
         AND published_date >= '{start_date}'
@@ -839,13 +833,12 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         SELECT matched_profile,
         published_date,
         reach,
-        url,
+        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     )
     
-    SELECT DISTINCT url,
-        COUNT(published_date) as count_pub
+    SELECT COUNT(published_date) as count_pub
     FROM result_table
     WHERE REGEXP_CONTAINS(result, r'Self')
         AND published_date >= '{start_date}'
@@ -877,13 +870,12 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         SELECT matched_profile,
         published_date,
         reach,
-        url,
+        DISTINCT url,
         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
         FROM Main_Table
     )
     
-    SELECT DISTINCT url,
-        COUNT(published_date) as count_pub
+    SELECT COUNT(published_date) as count_pub
     FROM result_table
     WHERE REGEXP_CONTAINS(result, r'Self')
         AND published_date >= '{start_date}'
@@ -915,13 +907,12 @@ def vis_message_graph_perc_func(start_date, end_date, on):
             SELECT matched_profile,
             published_date,
             reach,
-            url,
+            DISTINCT url,
             IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
             FROM Main_Table
         )
         
-        SELECT DISTINCT url,
-            COUNT(published_date) as count_pub
+        SELECT COUNT(published_date) as count_pub
         FROM result_table
         WHERE REGEXP_CONTAINS(result, r'Self')
             AND published_date >= '{start_date}'
@@ -953,13 +944,12 @@ def vis_message_graph_perc_func(start_date, end_date, on):
             SELECT matched_profile,
             published_date,
             reach,
-            url,
+            DISTINCT url,
             IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
             FROM Main_Table
         )
         
-        SELECT DISTINCT url,
-            COUNT(published_date) as count_pub
+        SELECT COUNT(published_date) as count_pub
         FROM result_table
         WHERE REGEXP_CONTAINS(result, r'Self')
             AND published_date >= '{start_date}'
@@ -1154,7 +1144,7 @@ def Joaquin_tables_func(start_date, end_date, on):
         result_table AS (
             SELECT matched_profile,
             content_snippet,
-            url,
+            DISTINCT url,
             extra_author_attributes_name
             published_date,
             reach,
@@ -1164,7 +1154,7 @@ def Joaquin_tables_func(start_date, end_date, on):
         
         SELECT extra_author_attributes_name as Name,
             content_snippet as Content,
-            DISTINCT url as URL,
+            url as URL,
             reach as Reach
         FROM result_table
         WHERE REGEXP_CONTAINS(result, r'Self')
@@ -1198,7 +1188,7 @@ def Joaquin_tables_func(start_date, end_date, on):
         result_table AS (
             SELECT matched_profile,
             content_snippet,
-            url,
+            DISTINCT url,
             extra_author_attributes_name
             published_date,
             engagement,
@@ -1208,7 +1198,7 @@ def Joaquin_tables_func(start_date, end_date, on):
         
         SELECT extra_author_attributes_name as Name,
             content_snippet as Content,
-            DISTINCT url as URL,
+            url as URL,
             engagement as Engagement
         FROM result_table
         WHERE REGEXP_CONTAINS(result, r'Self')
@@ -1241,7 +1231,7 @@ def Joaquin_tables_func(start_date, end_date, on):
         result_table AS (
             SELECT matched_profile,
             content_snippet,
-            url,
+            DISTINCT url,
             extra_author_attributes_name
             published_date,
             reach,
@@ -1251,7 +1241,7 @@ def Joaquin_tables_func(start_date, end_date, on):
         
         SELECT extra_author_attributes_name as Name,
             content_snippet as Content,
-            DISTINCT url as URL,
+            url as URL,
             reach as Reach
         FROM result_table
         WHERE REGEXP_CONTAINS(result, r'Self')
@@ -1284,7 +1274,7 @@ def Joaquin_tables_func(start_date, end_date, on):
         result_table AS (
             SELECT matched_profile,
             content_snippet,
-            url,
+            DISTINCT url,
             extra_author_attributes_name
             published_date,
             engagement,
@@ -1294,7 +1284,7 @@ def Joaquin_tables_func(start_date, end_date, on):
         
         SELECT extra_author_attributes_name as Name,
             content_snippet as Content,
-            DISTINCT url as URL,
+            url as URL,
             engagement as Engagement
         FROM result_table
         WHERE REGEXP_CONTAINS(result, r'Self')
