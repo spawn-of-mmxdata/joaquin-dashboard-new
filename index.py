@@ -378,40 +378,40 @@ app.layout = html.Div(
                         'fontFamily':'Arial'}
         ),
         ], style = {'textAlign': 'center'}),
-        html.Br(),
-        html.Br(),
-        html.Div([
-            html.Div([html.P('Most Read News Articles', style = {'fontSize': 35, 'fontFamily':'Arial', 'color':'black', 'textAlign':'center'}),
-                dt.DataTable(id='news_articles_table_Joaquin',
-                                    columns=[{"name": i, "id": i} for i in ['Name', 'Content', 'URL', 'Reach']],
-                                    page_size = 10,
-                                    style_table = {'fontFamily':'Arial'},
-                                    style_cell = {'overflow':'hidden', 'textOverflow':'ellipses', 'maxWidth':0, 'fontFamily':'Arial'},
-                                    sort_action = 'native',
-                                    #data=df_article.sort_values(by = ['reach'], ascending = False).to_dict('records'),
-                                    export_format = 'xlsx')
-            ])], style = {'width':'100%',
-                        'textAlign':'center',
-                        'fontFamily':'Arial'},
-            className='news_articles_table'
-        ),
-        html.Br(),
-        html.Br(),
-        html.Div([
-            html.Div([html.P('Most Engaging Social Posts', style = {'fontSize': 35, 'fontFamily':'Arial', 'color':'black', 'textAlign':'center'}),
-                dt.DataTable(id='social_posts_table_Joaquin',
-                                    columns=[{"name": i, "id": i} for i in ['Name', 'Content', 'URL', 'Engagement']],
-                                    page_size = 10,
-                                    style_table = {'fontFamily':'Arial'},
-                                    style_cell = {'overflow':'hidden', 'textOverflow':'ellipses', 'maxWidth':0, 'fontFamily':'Arial'},
-                                    sort_action = 'native',
-                                    #data=df_social.sort_values(by = ['engagement'], ascending = False).to_dict('records'),
-                                    export_format = 'xlsx')
-            ])], style = {'width':'100%',
-                        'textAlign':'center',
-                        'fontFamily':'Arial'},
-            className='social_posts_table'
-        ),
+        # html.Br(),
+        # html.Br(),
+        # html.Div([
+        #     html.Div([html.P('Most Read News Articles', style = {'fontSize': 35, 'fontFamily':'Arial', 'color':'black', 'textAlign':'center'}),
+        #         dt.DataTable(id='news_articles_table_Joaquin',
+        #                             columns=[{"name": i, "id": i} for i in ['Name', 'Content', 'URL', 'Reach']],
+        #                             page_size = 10,
+        #                             style_table = {'fontFamily':'Arial'},
+        #                             style_cell = {'overflow':'hidden', 'textOverflow':'ellipses', 'maxWidth':0, 'fontFamily':'Arial'},
+        #                             sort_action = 'native',
+        #                             #data=df_article.sort_values(by = ['reach'], ascending = False).to_dict('records'),
+        #                             export_format = 'xlsx')
+        #     ])], style = {'width':'100%',
+        #                 'textAlign':'center',
+        #                 'fontFamily':'Arial'},
+        #     className='news_articles_table'
+        # ),
+        # html.Br(),
+        # html.Br(),
+        # html.Div([
+        #     html.Div([html.P('Most Engaging Social Posts', style = {'fontSize': 35, 'fontFamily':'Arial', 'color':'black', 'textAlign':'center'}),
+        #         dt.DataTable(id='social_posts_table_Joaquin',
+        #                             columns=[{"name": i, "id": i} for i in ['Name', 'Content', 'URL', 'Engagement']],
+        #                             page_size = 10,
+        #                             style_table = {'fontFamily':'Arial'},
+        #                             style_cell = {'overflow':'hidden', 'textOverflow':'ellipses', 'maxWidth':0, 'fontFamily':'Arial'},
+        #                             sort_action = 'native',
+        #                             #data=df_social.sort_values(by = ['engagement'], ascending = False).to_dict('records'),
+        #                             export_format = 'xlsx')
+        #     ])], style = {'width':'100%',
+        #                 'textAlign':'center',
+        #                 'fontFamily':'Arial'},
+        #     className='social_posts_table'
+        # ),
         html.Br(),
         html.Br(),
         html.Div(
@@ -1101,9 +1101,9 @@ def blogs_func(start_date, end_date):
     return card1, card2, card3, card4, card5, card6, dff_blogs.to_dict('records')
 
 @app.callback(
-    [Output('news_articles_table_Joaquin', 'data'),
-     Output('social_posts_table_Joaquin', 'data'),
-     Output('speaking_engagements_table', 'data')],
+    # [Output('news_articles_table_Joaquin', 'data'),
+    #  Output('social_posts_table_Joaquin', 'data'),
+     Output('speaking_engagements_table', 'data'),
     [Input('date_picker', 'start_date'),
      Input('date_picker', 'end_date'),
      Input('comms_pillar_toggle', 'on')]
@@ -1118,185 +1118,185 @@ def Joaquin_tables_func(start_date, end_date, on):
     if end_date is not None: # add end time
         dff_engagements = dff_engagements[dff_engagements['Date'] <= end_date]
     
-    if on == True:
-        query1 = f"""
-        WITH Main_Table AS (
-            SELECT reach,
-            engagement,
-            extra_author_attributes_name,
-            matched_profile, 
-            tags_customer,
-            tags_internal,
-            tags_marking,
-            title_snippet,
-            post_type,
-            source_type,
-            url,
-            content_snippet,
-            sentiment,
-            EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
-            WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
-                AND tags_customer IS NOT NULL
-                AND REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
-        ),
+    # if on == True:
+    #     query1 = f"""
+    #     WITH Main_Table AS (
+    #         SELECT reach,
+    #         engagement,
+    #         extra_author_attributes_name,
+    #         matched_profile,
+    #         tags_customer,
+    #         tags_internal,
+    #         tags_marking,
+    #         title_snippet,
+    #         post_type,
+    #         source_type,
+    #         url,
+    #         content_snippet,
+    #         sentiment,
+    #         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
+    #         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
+    #         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
+    #             AND tags_customer IS NOT NULL
+    #             AND REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
+    #     ),
+    #
+    #     result_table AS (
+    #         SELECT DISTINCT url,
+    #         matched_profile,
+    #         content_snippet,
+    #         extra_author_attributes_name
+    #         published_date,
+    #         reach,
+    #         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+    #         FROM Main_Table
+    #     )
+    #
+    #     SELECT url as URL,
+    #         extra_author_attributes_name as Name,
+    #         content_snippet as Content,
+    #         reach as Reach
+    #     FROM result_table
+    #     WHERE REGEXP_CONTAINS(result, r'Self')
+    #         AND published_date >= '{start_date}'
+    #         AND published_date <= '{end_date}'
+    #     ORDER BY Reach DESC
+    #     """
+    #
+    #     query2 = f"""
+    #     WITH Main_Table AS (
+    #         SELECT reach,
+    #         engagement,
+    #         extra_author_attributes_name,
+    #         matched_profile,
+    #         tags_customer,
+    #         tags_internal,
+    #         tags_marking,
+    #         title_snippet,
+    #         post_type,
+    #         source_type,
+    #         url,
+    #         content_snippet,
+    #         sentiment,
+    #         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
+    #         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
+    #         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
+    #             AND tags_customer IS NOT NULL
+    #             AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
+    #     ),
+    #
+    #     result_table AS (
+    #         SELECT DISTINCT url,
+    #         matched_profile,
+    #         content_snippet,
+    #         extra_author_attributes_name
+    #         published_date,
+    #         engagement,
+    #         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+    #         FROM Main_Table
+    #     )
+    #
+    #     SELECT extra_author_attributes_name as Name,
+    #         content_snippet as Content,
+    #         url as URL,
+    #         engagement as Engagement
+    #     FROM result_table
+    #     WHERE REGEXP_CONTAINS(result, r'Self')
+    #         AND published_date >= '{start_date}'
+    #         AND published_date <= '{end_date}'
+    #     ORDER BY Engagement DESC
+    #     """
+    # else:
+    #     query1 = f"""
+    #     WITH Main_Table AS (
+    #         SELECT reach,
+    #         engagement,
+    #         extra_author_attributes_name,
+    #         matched_profile,
+    #         tags_customer,
+    #         tags_internal,
+    #         tags_marking,
+    #         title_snippet,
+    #         post_type,
+    #         source_type,
+    #         url,
+    #         content_snippet,
+    #         sentiment,
+    #         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
+    #         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
+    #         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
+    #             AND REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
+    #     ),
+    #
+    #     result_table AS (
+    #         SELECT DISTINCT url,
+    #         matched_profile,
+    #         content_snippet,
+    #         extra_author_attributes_name
+    #         published_date,
+    #         reach,
+    #         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+    #         FROM Main_Table
+    #     )
+    #
+    #     SELECT extra_author_attributes_name as Name,
+    #         content_snippet as Content,
+    #         url as URL,
+    #         reach as Reach
+    #     FROM result_table
+    #     WHERE REGEXP_CONTAINS(result, r'Self')
+    #         AND published_date >= '{start_date}'
+    #         AND published_date <= '{end_date}'
+    #     ORDER BY Reach DESC
+    #     """
+    #
+    #     query2 = f"""
+    #     WITH Main_Table AS (
+    #         SELECT reach,
+    #         engagement,
+    #         extra_author_attributes_name,
+    #         matched_profile,
+    #         tags_customer,
+    #         tags_internal,
+    #         tags_marking,
+    #         title_snippet,
+    #         post_type,
+    #         source_type,
+    #         url,
+    #         content_snippet,
+    #         sentiment,
+    #         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
+    #         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
+    #         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
+    #             AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
+    #     ),
+    #
+    #     result_table AS (
+    #         SELECT DISTINCT url,
+    #         matched_profile,
+    #         content_snippet,
+    #         extra_author_attributes_name
+    #         published_date,
+    #         engagement,
+    #         IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+    #         FROM Main_Table
+    #     )
+    #
+    #     SELECT extra_author_attributes_name as Name,
+    #         content_snippet as Content,
+    #         url as URL,
+    #         engagement as Engagement
+    #     FROM result_table
+    #     WHERE REGEXP_CONTAINS(result, r'Self')
+    #         AND published_date >= '{start_date}'
+    #         AND published_date <= '{end_date}'
+    #     ORDER BY Engagement DESC
+    #     """
+    #
+    # dff_article = gbq.read_gbq(query1, project_id = project_id, dialect = 'standard', credentials = credentials)
+    # dff_social = gbq.read_gbq(query2, project_id = project_id, dialect = 'standard', credentials = credentials)
     
-        result_table AS (
-            SELECT DISTINCT url,
-            matched_profile,
-            content_snippet,
-            extra_author_attributes_name
-            published_date,
-            reach,
-            IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
-            FROM Main_Table
-        )
-        
-        SELECT extra_author_attributes_name as Name,
-            content_snippet as Content,
-            url as URL,
-            reach as Reach
-        FROM result_table
-        WHERE REGEXP_CONTAINS(result, r'Self')
-            AND published_date >= '{start_date}'
-            AND published_date <= '{end_date}'
-        ORDER BY Reach DESC
-        """
-        
-        query2 = f"""
-        WITH Main_Table AS (
-            SELECT reach,
-            engagement,
-            extra_author_attributes_name,
-            matched_profile, 
-            tags_customer,
-            tags_internal,
-            tags_marking,
-            title_snippet,
-            post_type,
-            source_type,
-            url,
-            content_snippet,
-            sentiment,
-            EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
-            WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
-                AND tags_customer IS NOT NULL
-                AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
-        ),
-    
-        result_table AS (
-            SELECT DISTINCT url,
-            matched_profile,
-            content_snippet,
-            extra_author_attributes_name
-            published_date,
-            engagement,
-            IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
-            FROM Main_Table
-        )
-        
-        SELECT extra_author_attributes_name as Name,
-            content_snippet as Content,
-            url as URL,
-            engagement as Engagement
-        FROM result_table
-        WHERE REGEXP_CONTAINS(result, r'Self')
-            AND published_date >= '{start_date}'
-            AND published_date <= '{end_date}'
-        ORDER BY Engagement DESC
-        """
-    else:
-        query1 = f"""
-        WITH Main_Table AS (
-            SELECT reach,
-            engagement,
-            extra_author_attributes_name,
-            matched_profile, 
-            tags_customer,
-            tags_internal,
-            tags_marking,
-            title_snippet,
-            post_type,
-            source_type,
-            url,
-            content_snippet,
-            sentiment,
-            EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
-            WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
-                AND REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
-        ),
-    
-        result_table AS (
-            SELECT DISTINCT url,
-            matched_profile,
-            content_snippet,
-            extra_author_attributes_name
-            published_date,
-            reach,
-            IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
-            FROM Main_Table
-        )
-        
-        SELECT extra_author_attributes_name as Name,
-            content_snippet as Content,
-            url as URL,
-            reach as Reach
-        FROM result_table
-        WHERE REGEXP_CONTAINS(result, r'Self')
-            AND published_date >= '{start_date}'
-            AND published_date <= '{end_date}'
-        ORDER BY Reach DESC
-        """
-
-        query2 = f"""
-        WITH Main_Table AS (
-            SELECT reach,
-            engagement,
-            extra_author_attributes_name,
-            matched_profile, 
-            tags_customer,
-            tags_internal,
-            tags_marking,
-            title_snippet,
-            post_type,
-            source_type,
-            url,
-            content_snippet,
-            sentiment,
-            EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
-            FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
-            WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
-                AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
-        ),
-    
-        result_table AS (
-            SELECT DISTINCT url,
-            matched_profile,
-            content_snippet,
-            extra_author_attributes_name
-            published_date,
-            engagement,
-            IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
-            FROM Main_Table
-        )
-        
-        SELECT extra_author_attributes_name as Name,
-            content_snippet as Content,
-            url as URL,
-            engagement as Engagement
-        FROM result_table
-        WHERE REGEXP_CONTAINS(result, r'Self')
-            AND published_date >= '{start_date}'
-            AND published_date <= '{end_date}'
-        ORDER BY Engagement DESC
-        """
-    
-    dff_article = gbq.read_gbq(query1, project_id = project_id, dialect = 'standard', credentials = credentials)
-    dff_social = gbq.read_gbq(query2, project_id = project_id, dialect = 'standard', credentials = credentials)
-    
-    return dff_article.to_dict('records'), dff_social.to_dict('records'), dff_engagements.to_dict('records')
+    return dff_engagements.to_dict('records')
 
 @app.callback(
     Output('vis_time_graph', 'figure'),
