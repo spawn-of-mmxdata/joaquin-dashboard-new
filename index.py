@@ -518,11 +518,12 @@ def card_func(start_date, end_date):
     query1 = f"""
     WITH Main_Table AS (
         SELECT reach,
-        engagement, 
-        extra_author_attributes_name, 
-        matched_profile, tags_customer, 
-        tags_internal, 
-        tags_marking, 
+        engagement,
+        extra_author_attributes_name,
+        matched_profile, 
+        tags_customer,
+        tags_internal,
+        tags_marking,
         title_snippet,
         post_type,
         source_type,
@@ -532,22 +533,32 @@ def card_func(start_date, end_date):
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
-    )
+    ),
 
-    SELECT COUNT(url) as count_url
-    FROM Main_Table
-    WHERE published_date >= '{start_date}'
+    result_table AS (
+        SELECT matched_profile,
+        published_date,
+        url,
+        IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+        FROM Main_Table
+    )
+    
+    SELECT COUNT(DISTINCT url) as count_url
+    FROM result_table
+    WHERE REGEXP_CONTAINS(result, r'Self')
+        AND published_date >= '{start_date}'
         AND published_date <= '{end_date}'
     """
     
     query2 = f"""
     WITH Main_Table AS (
         SELECT reach,
-        engagement, 
-        extra_author_attributes_name, 
-        matched_profile, tags_customer, 
-        tags_internal, 
-        tags_marking, 
+        engagement,
+        extra_author_attributes_name,
+        matched_profile, 
+        tags_customer,
+        tags_internal,
+        tags_marking,
         title_snippet,
         post_type,
         source_type,
@@ -557,22 +568,34 @@ def card_func(start_date, end_date):
         EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
-    )
+    ),
 
-    SELECT sum(REACH) as sum_reach
-    FROM Main_Table
-    WHERE published_date >= '{start_date}'
+    result_table AS (
+        SELECT matched_profile,
+        published_date,
+        reach,
+        url,
+        IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+        FROM Main_Table
+    )
+    
+    SELECT DISTINCT url,
+        SUM(reach) as sum_reach
+    FROM result_table
+    WHERE REGEXP_CONTAINS(result, r'Self')
+        AND published_date >= '{start_date}'
         AND published_date <= '{end_date}'
     """
     
     query3 = f"""
     WITH Main_Table AS (
         SELECT reach,
-        engagement, 
-        extra_author_attributes_name, 
-        matched_profile, tags_customer, 
-        tags_internal, 
-        tags_marking, 
+        engagement,
+        extra_author_attributes_name,
+        matched_profile, 
+        tags_customer,
+        tags_internal,
+        tags_marking,
         title_snippet,
         post_type,
         source_type,
@@ -583,22 +606,32 @@ def card_func(start_date, end_date):
         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND tags_customer IS NOT NULL
-    )
+    ),
 
-    SELECT COUNT(url) as count_url
-    FROM Main_Table
-    WHERE published_date >= '{start_date}'
+    result_table AS (
+        SELECT matched_profile,
+        published_date,
+        url,
+        IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+        FROM Main_Table
+    )
+    
+    SELECT COUNT(DISTINCT url) as count_url
+    FROM result_table
+    WHERE REGEXP_CONTAINS(result, r'Self')
+        AND published_date >= '{start_date}'
         AND published_date <= '{end_date}'
     """
     
     query4 = f"""
     WITH Main_Table AS (
         SELECT reach,
-        engagement, 
-        extra_author_attributes_name, 
-        matched_profile, tags_customer, 
-        tags_internal, 
-        tags_marking, 
+        engagement,
+        extra_author_attributes_name,
+        matched_profile, 
+        tags_customer,
+        tags_internal,
+        tags_marking,
         title_snippet,
         post_type,
         source_type,
@@ -609,34 +642,78 @@ def card_func(start_date, end_date):
         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND tags_customer IS NOT NULL
-    )
+    ),
 
-    SELECT SUM(reach) as sum_reach
-    FROM Main_Table
-    WHERE published_date >= '{start_date}'
+    result_table AS (
+        SELECT matched_profile,
+        published_date,
+        reach,
+        url,
+        IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+        FROM Main_Table
+    )
+    
+    SELECT DISTINCT url,
+        SUM(reach) as sum_reach
+    FROM result_table
+    WHERE REGEXP_CONTAINS(result, r'Self')
+        AND published_date >= '{start_date}'
         AND published_date <= '{end_date}'
     """
     
     query5 = f"""
     WITH Main_Table AS (
-        SELECT COUNT(sentiment) as sentiment_count
+        SELECT reach,
+        engagement,
+        extra_author_attributes_name,
+        matched_profile, 
+        tags_customer,
+        tags_internal,
+        tags_marking,
+        title_snippet,
+        post_type,
+        source_type,
+        url,
+        content_snippet,
+        sentiment,
+        EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
+            AND tags_customer IS NOT NULL
+    ),
+
+    result_table AS (
+        SELECT matched_profile,
+        published_date,
+        sentiment,
+        url,
+        IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+        FROM Main_Table
+    ),
+    
+    Trunc_Table AS (
+        SELECT DISTINCT url,
+            COUNT(sentiment) as sentiment_count
+        FROM result_table
+        WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND sentiment >= 0
-            AND EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) >= '{start_date}'
-            AND EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) <= '{end_date}'
+            AND REGEXP_CONTAINS(result, r'Self')
+            AND published_date >= '{start_date}'
+            AND published_date <= '{end_date}'
     ),
 
     Total_Table AS (
-        SELECT COUNT(url) as total_count
-        FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
+        SELECT DISTINCT url,
+            COUNT(published_date) as total_count
+        FROM result_table
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
-            AND EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) >= '{start_date}'
-            AND EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) <= '{end_date}'
+            AND REGEXP_CONTAINS(result, r'Self')
+            AND published_date >= '{start_date}'
+            AND published_date <= '{end_date}'
     )
 
     SELECT sentiment_count/total_count as sentiment_pct
-    FROM Main_Table, Total_Table
+    FROM Trunc_Table, Total_Table
     """
     
     dff_total_count_url = gbq.read_gbq(query1, project_id = project_id, dialect = 'standard', credentials = credentials)
@@ -645,9 +722,9 @@ def card_func(start_date, end_date):
     dff_comms_sum_reach = gbq.read_gbq(query4, project_id = project_id, dialect = 'standard', credentials = credentials)
     dff_total_sentiment = gbq.read_gbq(query5, project_id = project_id, dialect = 'standard', credentials = credentials)
     
-    card1 = '{:,}'.format(dff_total_count_url['count_url'].sum())
+    card1 = '{:,}'.format(dff_total_count_url['count_result'].sum())
     card2 = '{:,}'.format(dff_total_sum_reach['sum_reach'].sum())
-    card3 = '{:,}'.format(dff_comms_count_url['count_url'].sum())
+    card3 = '{:,}'.format(dff_comms_count_url['count_result'].sum())
     card4 = '{:,}'.format(dff_comms_sum_reach['sum_reach'].sum())
     card5 = '{:.0%}'.format(dff_total_sentiment['sentiment_pct'].sum())
             
@@ -664,11 +741,12 @@ def vis_message_graph_perc_func(start_date, end_date, on):
     query1 = f"""
     WITH Main_Table AS (
         SELECT reach,
-        engagement, 
-        extra_author_attributes_name, 
-        matched_profile, tags_customer, 
-        tags_internal, 
-        tags_marking, 
+        engagement,
+        extra_author_attributes_name,
+        matched_profile, 
+        tags_customer,
+        tags_internal,
+        tags_marking,
         title_snippet,
         post_type,
         source_type,
@@ -679,22 +757,34 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(tags_customer, r'Frontline HCPs')
-    )
+    ),
 
-    SELECT COUNT(url) as count_url
-    FROM Main_Table
-    WHERE published_date >= '{start_date}'
+    result_table AS (
+        SELECT matched_profile,
+        published_date,
+        reach,
+        url,
+        IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+        FROM Main_Table
+    )
+    
+    SELECT DISTINCT url,
+        COUNT(published_date) as count_pub
+    FROM result_table
+    WHERE REGEXP_CONTAINS(result, r'Self')
+        AND published_date >= '{start_date}'
         AND published_date <= '{end_date}'
     """
 
     query2 = f"""
     WITH Main_Table AS (
         SELECT reach,
-        engagement, 
-        extra_author_attributes_name, 
-        matched_profile, tags_customer, 
-        tags_internal, 
-        tags_marking, 
+        engagement,
+        extra_author_attributes_name,
+        matched_profile, 
+        tags_customer,
+        tags_internal,
+        tags_marking,
         title_snippet,
         post_type,
         source_type,
@@ -705,22 +795,34 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(tags_customer, r'Innovation')
-    )
+    ),
 
-    SELECT COUNT(url) as count_url
-    FROM Main_Table
-    WHERE published_date >= '{start_date}'
+    result_table AS (
+        SELECT matched_profile,
+        published_date,
+        reach,
+        url,
+        IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+        FROM Main_Table
+    )
+    
+    SELECT DISTINCT url,
+        COUNT(published_date) as count_pub
+    FROM result_table
+    WHERE REGEXP_CONTAINS(result, r'Self')
+        AND published_date >= '{start_date}'
         AND published_date <= '{end_date}'
     """
     
     query3 = f"""
     WITH Main_Table AS (
         SELECT reach,
-        engagement, 
-        extra_author_attributes_name, 
-        matched_profile, tags_customer, 
-        tags_internal, 
-        tags_marking, 
+        engagement,
+        extra_author_attributes_name,
+        matched_profile, 
+        tags_customer,
+        tags_internal,
+        tags_marking,
         title_snippet,
         post_type,
         source_type,
@@ -731,22 +833,34 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(tags_customer, r'Values')
-    )
+    ),
 
-    SELECT COUNT(url) as count_url
-    FROM Main_Table
-    WHERE published_date >= '{start_date}'
+    result_table AS (
+        SELECT matched_profile,
+        published_date,
+        reach,
+        url,
+        IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+        FROM Main_Table
+    )
+    
+    SELECT DISTINCT url,
+        COUNT(published_date) as count_pub
+    FROM result_table
+    WHERE REGEXP_CONTAINS(result, r'Self')
+        AND published_date >= '{start_date}'
         AND published_date <= '{end_date}'
     """
     
     query4 = f"""
     WITH Main_Table AS (
         SELECT reach,
-        engagement, 
-        extra_author_attributes_name, 
-        matched_profile, tags_customer, 
-        tags_internal, 
-        tags_marking, 
+        engagement,
+        extra_author_attributes_name,
+        matched_profile, 
+        tags_customer,
+        tags_internal,
+        tags_marking,
         title_snippet,
         post_type,
         source_type,
@@ -757,22 +871,34 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
         WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
             AND REGEXP_CONTAINS(tags_customer, r'Health Equity')
-    )
+    ),
 
-    SELECT COUNT(url) as count_url
-    FROM Main_Table
-    WHERE published_date >= '{start_date}'
+    result_table AS (
+        SELECT matched_profile,
+        published_date,
+        reach,
+        url,
+        IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+        FROM Main_Table
+    )
+    
+    SELECT DISTINCT url,
+        COUNT(published_date) as count_pub
+    FROM result_table
+    WHERE REGEXP_CONTAINS(result, r'Self')
+        AND published_date >= '{start_date}'
         AND published_date <= '{end_date}'
     """
     if on == True:
         query5 = f"""
         WITH Main_Table AS (
             SELECT reach,
-            engagement, 
-            extra_author_attributes_name, 
-            matched_profile, tags_customer, 
-            tags_internal, 
-            tags_marking, 
+            engagement,
+            extra_author_attributes_name,
+            matched_profile, 
+            tags_customer,
+            tags_internal,
+            tags_marking,
             title_snippet,
             post_type,
             source_type,
@@ -783,11 +909,22 @@ def vis_message_graph_perc_func(start_date, end_date, on):
             FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND tags_customer IS NOT NULL
+        ),
+    
+        result_table AS (
+            SELECT matched_profile,
+            published_date,
+            reach,
+            url,
+            IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+            FROM Main_Table
         )
-
-        SELECT COUNT(url) as count_url
-        FROM Main_Table
-        WHERE published_date >= '{start_date}'
+        
+        SELECT DISTINCT url,
+            COUNT(published_date) as count_pub
+        FROM result_table
+        WHERE REGEXP_CONTAINS(result, r'Self')
+            AND published_date >= '{start_date}'
             AND published_date <= '{end_date}'
         """
         
@@ -795,11 +932,12 @@ def vis_message_graph_perc_func(start_date, end_date, on):
         query5 = f"""
         WITH Main_Table AS (
             SELECT reach,
-            engagement, 
-            extra_author_attributes_name, 
-            matched_profile, tags_customer, 
-            tags_internal, 
-            tags_marking, 
+            engagement,
+            extra_author_attributes_name,
+            matched_profile, 
+            tags_customer,
+            tags_internal,
+            tags_marking,
             title_snippet,
             post_type,
             source_type,
@@ -809,11 +947,22 @@ def vis_message_graph_perc_func(start_date, end_date, on):
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
             FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
+        ),
+    
+        result_table AS (
+            SELECT matched_profile,
+            published_date,
+            reach,
+            url,
+            IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+            FROM Main_Table
         )
-
-        SELECT COUNT(url) as count_url
-        FROM Main_Table
-        WHERE published_date >= '{start_date}'
+        
+        SELECT DISTINCT url,
+            COUNT(published_date) as count_pub
+        FROM result_table
+        WHERE REGEXP_CONTAINS(result, r'Self')
+            AND published_date >= '{start_date}'
             AND published_date <= '{end_date}'
         """
         
@@ -825,14 +974,14 @@ def vis_message_graph_perc_func(start_date, end_date, on):
 
     
     fig = px.bar(x=['Frontline HCPs','Innovation','Values','Health Equity'],
-                 y=[num_frontline['count_url'].sum()/num_total['count_url'].sum(),
-                    num_innovation['count_url'].sum()/num_total['count_url'].sum(),
-                    num_values['count_url'].sum()/num_total['count_url'].sum(),
-                    num_health['count_url'].sum()/num_total['count_url'].sum()], 
-                 text=[num_frontline['count_url'].sum()/num_total['count_url'].sum(),
-                       num_innovation['count_url'].sum()/num_total['count_url'].sum(),
-                       num_values['count_url'].sum()/num_total['count_url'].sum(),
-                       num_health['count_url'].sum()/num_total['count_url'].sum()],
+                 y=[num_frontline['count_pub'].sum()/num_total['count_pub'].sum(),
+                    num_innovation['count_pub'].sum()/num_total['count_pub'].sum(),
+                    num_values['count_pub'].sum()/num_total['count_pub'].sum(),
+                    num_health['count_pub'].sum()/num_total['count_pub'].sum()],
+                 text=[num_frontline['count_pub'].sum()/num_total['count_pub'].sum(),
+                       num_innovation['count_pub'].sum()/num_total['count_pub'].sum(),
+                       num_values['count_pub'].sum()/num_total['count_pub'].sum(),
+                       num_health['count_pub'].sum()/num_total['count_pub'].sum()],
                 labels={'x':'Topics', 'y':'Percentages'},
                 color = ['Frontline HCPs', 'Innovation', 'Values', 'Health Equity'],
                 color_discrete_map = {
@@ -983,11 +1132,12 @@ def Joaquin_tables_func(start_date, end_date, on):
         query1 = f"""
         WITH Main_Table AS (
             SELECT reach,
-            engagement, 
-            extra_author_attributes_name, 
-            matched_profile, tags_customer, 
-            tags_internal, 
-            tags_marking, 
+            engagement,
+            extra_author_attributes_name,
+            matched_profile, 
+            tags_customer,
+            tags_internal,
+            tags_marking,
             title_snippet,
             post_type,
             source_type,
@@ -996,17 +1146,29 @@ def Joaquin_tables_func(start_date, end_date, on):
             sentiment,
             EXTRACT(DATE FROM TIMESTAMP_MILLIS(published)) AS published_date
             FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
-            WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Gorsky')
+            WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND tags_customer IS NOT NULL
                 AND REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
+        ),
+    
+        result_table AS (
+            SELECT matched_profile,
+            content_snippet,
+            url,
+            extra_author_attributes_name
+            published_date,
+            reach,
+            IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+            FROM Main_Table
         )
-
+        
         SELECT extra_author_attributes_name as Name,
             content_snippet as Content,
-            url as URL,
+            DISTINCT url as URL,
             reach as Reach
-        FROM Main_Table
-        WHERE published_date >= '{start_date}'
+        FROM result_table
+        WHERE REGEXP_CONTAINS(result, r'Self')
+            AND published_date >= '{start_date}'
             AND published_date <= '{end_date}'
         ORDER BY Reach DESC
         """
@@ -1014,11 +1176,12 @@ def Joaquin_tables_func(start_date, end_date, on):
         query2 = f"""
         WITH Main_Table AS (
             SELECT reach,
-            engagement, 
-            extra_author_attributes_name, 
-            matched_profile, tags_customer, 
-            tags_internal, 
-            tags_marking, 
+            engagement,
+            extra_author_attributes_name,
+            matched_profile, 
+            tags_customer,
+            tags_internal,
+            tags_marking,
             title_snippet,
             post_type,
             source_type,
@@ -1030,14 +1193,26 @@ def Joaquin_tables_func(start_date, end_date, on):
             WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND tags_customer IS NOT NULL
                 AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
+        ),
+    
+        result_table AS (
+            SELECT matched_profile,
+            content_snippet,
+            url,
+            extra_author_attributes_name
+            published_date,
+            engagement,
+            IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+            FROM Main_Table
         )
-
+        
         SELECT extra_author_attributes_name as Name,
             content_snippet as Content,
-            url as URL,
+            DISTINCT url as URL,
             engagement as Engagement
-        FROM Main_Table
-        WHERE published_date >= '{start_date}'
+        FROM result_table
+        WHERE REGEXP_CONTAINS(result, r'Self')
+            AND published_date >= '{start_date}'
             AND published_date <= '{end_date}'
         ORDER BY Engagement DESC
         """
@@ -1045,11 +1220,12 @@ def Joaquin_tables_func(start_date, end_date, on):
         query1 = f"""
         WITH Main_Table AS (
             SELECT reach,
-            engagement, 
-            extra_author_attributes_name, 
-            matched_profile, tags_customer, 
-            tags_internal, 
-            tags_marking, 
+            engagement,
+            extra_author_attributes_name,
+            matched_profile, 
+            tags_customer,
+            tags_internal,
+            tags_marking,
             title_snippet,
             post_type,
             source_type,
@@ -1060,14 +1236,26 @@ def Joaquin_tables_func(start_date, end_date, on):
             FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND REGEXP_CONTAINS(source_type, r'ONLINENEWS') OR REGEXP_CONTAINS(source_type, r'BLOG')
+        ),
+    
+        result_table AS (
+            SELECT matched_profile,
+            content_snippet,
+            url,
+            extra_author_attributes_name
+            published_date,
+            reach,
+            IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+            FROM Main_Table
         )
-
+        
         SELECT extra_author_attributes_name as Name,
             content_snippet as Content,
-            url as URL,
+            DISTINCT url as URL,
             reach as Reach
-        FROM Main_Table
-        WHERE published_date >= '{start_date}'
+        FROM result_table
+        WHERE REGEXP_CONTAINS(result, r'Self')
+            AND published_date >= '{start_date}'
             AND published_date <= '{end_date}'
         ORDER BY Reach DESC
         """
@@ -1075,11 +1263,12 @@ def Joaquin_tables_func(start_date, end_date, on):
         query2 = f"""
         WITH Main_Table AS (
             SELECT reach,
-            engagement, 
-            extra_author_attributes_name, 
-            matched_profile, tags_customer, 
-            tags_internal, 
-            tags_marking, 
+            engagement,
+            extra_author_attributes_name,
+            matched_profile, 
+            tags_customer,
+            tags_internal,
+            tags_marking,
             title_snippet,
             post_type,
             source_type,
@@ -1090,14 +1279,26 @@ def Joaquin_tables_func(start_date, end_date, on):
             FROM `jnj-ooc-joaquin.jnj_ooc_joaquin_data.jnj_ooc_joaquin_table`
             WHERE REGEXP_CONTAINS(matched_profile, r'Joaquin Duato')
                 AND REGEXP_CONTAINS(source_type, r'SOCIALMEDIA') OR REGEXP_CONTAINS(source_type, r'MESSAGEBOARD')
+        ),
+    
+        result_table AS (
+            SELECT matched_profile,
+            content_snippet,
+            url,
+            extra_author_attributes_name
+            published_date,
+            engagement,
+            IF(REGEXP_CONTAINS(matched_profile, r'Peer'), 'Peer', 'Self') as result
+            FROM Main_Table
         )
-
+        
         SELECT extra_author_attributes_name as Name,
             content_snippet as Content,
-            url as URL,
+            DISTINCT url as URL,
             engagement as Engagement
-        FROM Main_Table
-        WHERE published_date >= '{start_date}'
+        FROM result_table
+        WHERE REGEXP_CONTAINS(result, r'Self')
+            AND published_date >= '{start_date}'
             AND published_date <= '{end_date}'
         ORDER BY Engagement DESC
         """
